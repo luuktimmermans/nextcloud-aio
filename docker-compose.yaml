@@ -19,7 +19,7 @@ services:
       - APACHE_IP_BINDING=${APACHE_IP_BINDING:-0.0.0.0}
       - SKIP_DOMAIN_VALIDATION=true
       - NEXTCLOUD_MEMORY_LIMIT=${NEXTCLOUD_MEMORY_LIMIT:-1024M}
-      # - NEXTCLOUD_MOUNT=/mnt/
+      - NEXTCLOUD_MOUNT=/mnt/
       # - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATADIR:-/mnt/nextcloud}
       # - TALK_PORT=3478
     networks:
