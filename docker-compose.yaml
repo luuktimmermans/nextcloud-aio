@@ -20,7 +20,7 @@ services:
       - SKIP_DOMAIN_VALIDATION=true
       - NEXTCLOUD_MEMORY_LIMIT=${NEXTCLOUD_MEMORY_LIMIT:-1024M}
       - NEXTCLOUD_MOUNT=/mnt/
-      # - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATADIR:-/mnt/ncdata}
+      - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATADIR:-/mnt/nextcloud}
       # - TALK_PORT=3478
     networks:
       - nextcloud-aio
