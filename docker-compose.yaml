@@ -21,6 +21,23 @@ services:
       - NEXTCLOUD_MOUNT=/mnt/
       # - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATADIR:-/mnt/nextcloud}
       # - TALK_PORT=3478
+    networks:
+      - nextcloud-aio
+
+  cloudflare-tunnel:
+    # service : http://nextcloud-aio-mastercontainer:11002
+    image: 'cloudflare/cloudflared:latest'
+    container_name: nextcloud-aio-cloudflare
+    networks:
+      - nextcloud-aio
+    restart: always
+    command: 'tunnel --no-autoupdate run'
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      
 volumes:
   nextcloud_aio_mastercontainer:
+    external: true
+networks:
+  nextcloud-aio:
     external: true
