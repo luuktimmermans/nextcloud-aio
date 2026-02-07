@@ -7,37 +7,16 @@ services:
     volumes:
       - 'nextcloud_aio_mastercontainer:/mnt/docker-aio-config'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      # - '/opt/nextcloud-aio/data:/mnt/ncdata:rw'
     ports:
-#      - '11000:80' # apache interface, not usefull with cloudflare
-#      - '11002:80' # apache interface, not usefull with cloudflare
-      - '11001:8080' # interface AIO, port for http, mastercontainer, interface admin, don't show if internal network
-#      - '10999:8443' # HTTPS AIO (certificats Let's Encrypt si besoin, masquer si passe par tunnel cloudflare)
+      - '11001:8080' 
     environment:
-      - APACHE_PORT=${APACHE_PORT:-11000}
-      - APACHE_IP_BINDING=${APACHE_IP_BINDING:-0.0.0.0}
-      - SKIP_DOMAIN_VALIDATION=true
-      - NEXTCLOUD_MEMORY_LIMIT=${NEXTCLOUD_MEMORY_LIMIT:-1024M}
-      - NEXTCLOUD_MOUNT=/mnt/
-      # - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATADIR:-/mnt/nextcloud}
-      # - TALK_PORT=3478
-    networks:
-      - nextcloud-aio
-
-  cloudflare-tunnel:
-    # service : http://nextcloud-aio-mastercontainer:11002
-    image: 'cloudflare/cloudflared:latest'
-    container_name: nextcloud-aio-cloudflare
-    networks:
-      - nextcloud-aio
-    restart: always
-    command: 'tunnel --no-autoupdate run'
-    environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      - APACHE_PORT: 11000
+      - APACHE_IP_BINDING: 0.0.0.0
+      - SKIP_DOMAIN_VALIDATION: true
+      - NEXTCLOUD_MEMORY_LIMIT: ${NEXTCLOUD_MEMORY_LIMIT:-1024M}
+      - NEXTCLOUD_MOUNT: /mnt/
       
 volumes:
   nextcloud_aio_mastercontainer:
-    external: true
-networks:
-  nextcloud-aio:
-    external: true
+    name: nextcloud_aio_mastercontainer
+
